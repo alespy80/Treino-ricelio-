@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projeção Aluno — Alessandro Ferreira Personal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+  <div class="intro-bg"></div>
+  <div class="intro-inner">
+    <div class="intro-badge">Alessandro Ferreira Personal</div>
+    <div class="intro-logo">PROJEÇÃO<br><span>ALUNO</span></div>
+    <div class="intro-linha"></div>
+    <div class="intro-sub">Evolução física projetada semana a semana</div>
+    <button class="intro-btn" onclick="iniciar()">Iniciar Avaliação →</button>
+    <button class="intro-btn-sec" onclick="abrirPainelAlunos()">👥 Ver Alunos</button>
+    <div id="alunos-salvos-wrap" style="margin-top:1.5rem"></div>
+  </div>
+</div>
+
+<!-- PAINEL ALUNOS -->
+<div class="painel-overlay" id="painel-overlay" onclick="fecharPainelAlunos(event)">
+  <div class="painel-modal" onclick="event.stopPropagation()">
+    <div class="painel-header">
+      <div class="painel-titulo">👥 Alunos Salvos</div>
+      <button class="painel-fechar" onclick="fecharPainelAlunos(true)">✕</button>
+    </div>
+    <div class="painel-busca">
+      <input type="text" id="busca-aluno" placeholder="Buscar por nome..." oninput="filtrarAlunos()" autocomplete="off"/>
+    </div>
+    <div class="painel-stats" id="painel-stats"></div>
+    <div class="painel-lista" id="painel-lista"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="oculto">
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">Projeção <span>Aluno</span></div>
+      <div class="header-sub">Alessandro Ferreira Personal</div>
+    </div>
+  </header>
+
+  <!-- STEPS -->
+  <div class="steps-wrap">
+    <div class="steps">
+      <div class="step ativa" id="s1"><span>1</span> Dados</div>
+      <div class="step-line"></div>
+      <div class="step" id="s2"><span>2</span> Medidas</div>
+      <div class="step-line"></div>
+      <div class="step" id="s3"><span>3</span> Objetivo</div>
+      <div class="step-line"></div>
+      <div class="step" id="s4"><span>4</span> Projeção</div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ETAPA 1: DADOS PESSOAIS -->
+    <div id="e1">
+      <div class="card">
+        <div class="card-label">Dados do Aluno</div>
+        <div class="form-grid">
+          <div class="campo campo-full"><label>Nome completo</label><input type="text" id="nome" placeholder="Nome do aluno"/></div>
+          <div class="campo"><label>Data da Avaliação</label><input type="date" id="data_aval"/></div>
+          <div class="campo"><label>Idade</label><input type="number" id="idade" placeholder="Anos" min="10" max="80"/></div>
+          <div class="campo"><label>Sexo</label>
+            <select id="sexo">
+              <option value="">Selecione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+          <div class="campo"><label>Peso atual (kg)</label><input type="number" id="peso" placeholder="Ex: 98.2" step="0.1"/></div>
+          <div class="campo"><label>Altura (cm)</label><input type="number" id="altura" placeholder="Ex: 180"/></div>
+          <div class="campo"><label>Frequência semanal</label>
+            <select id="freq">
+              <option value="2">2x por semana</option>
+              <option value="3">3x por semana</option>
+              <option value="4" selected>4x por semana</option>
+              <option value="5">5x por semana</option>
+            </select>
+          </div>
+          <div class="campo"><label>Nível de treino</label>
+            <select id="nivel">
+              <option value="iniciante">Iniciante</option>
+              <option value="intermediario" selected>Intermediário</option>
+              <option value="avancado">Avançado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="acoes"><button class="btn-prim" onclick="irPara(2)">Próximo: Medidas →</button></div>
+    </div>
+
+    <!-- ETAPA 2: MEDIDAS -->
+    <div id="e2" class="oculto">
+      <div class="card">
+        <div class="card-label">Perímetros (cm)</div>
+        <div class="form-grid">
+          <div class="campo"><label>Tórax</label><input type="number" id="torax" placeholder="Ex: 113" step="0.1"/></div>
+          <div class="campo"><label>Braço Esq.</label><input type="number" id="braco_e" placeholder="Ex: 34" step="0.1"/></div>
+          <div class="campo"><label>Braço Dir.</label><input type="number" id="braco_d" placeholder="Ex: 34" step="0.1"/></div>
+          <div class="campo"><label>Cintura</label><input type="number" id="cintura" placeholder="Ex: 112" step="0.1"/></div>
+          <div class="campo"><label>Abdômen</label><input type="number" id="abdomen" placeholder="Ex: 116" step="0.1"/></div>
+          <div class="campo"><label>Quadril</label><input type="number" id="quadril" placeholder="Ex: 105" step="0.1"/></div>
+          <div class="campo"><label>Coxa Esq.</label><input type="number" id="coxa_e" placeholder="Ex: 51" step="0.1"/></div>
+          <div class="campo"><label>Coxa Dir.</label><input type="number" id="coxa_d" placeholder="Ex: 51" step="0.1"/></div>
+          <div class="campo"><label>Perna Esq.</label><input type="number" id="perna_e" placeholder="Ex: 37" step="0.1"/></div>
+          <div class="campo"><label>Perna Dir.</label><input type="number" id="perna_d" placeholder="Ex: 37" step="0.1"/></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Dobras Cutâneas (mm) — Protocolo 7 Dobras</div>
+        <div class="form-grid">
+          <div class="campo"><label>Tricipital</label><input type="number" id="d_tri" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Subescapular</label><input type="number" id="d_sub" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Supra-ilíaca</label><input type="number" id="d_sup" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Peitoral</label><input type="number" id="d_pei" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Axilar média</label><input type="number" id="d_axi" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Abdominal</label><input type="number" id="d_abd" placeholder="mm" step="0.1"/></div>
+          <div class="campo"><label>Coxa</label><input type="number" id="d_cox" placeholder="mm" step="0.1"/></div>
+        </div>
+      </div>
+      <div class="acoes">
+        <button class="btn-sec" onclick="irPara(1)">← Voltar</button>
+        <button class="btn-prim" onclick="irPara(3)">Próximo: Objetivo →</button>
+      </div>
+    </div>
+
+    <!-- ETAPA 3: OBJETIVO -->
+    <div id="e3" class="oculto">
+      <div class="card">
+        <div class="card-label">Objetivo Principal</div>
+        <div class="obj-grid" id="obj-grid">
+          <div class="obj-card ativa" data-obj="gordura_abdominal" onclick="selecionarObj(this)">
+            <div class="obj-icone">🔥</div>
+            <div class="obj-titulo">Redução de Gordura Abdominal</div>
+            <div class="obj-desc">Foco em déficit calórico, treino metabólico e redução de circunferência abdominal.</div>
+          </div>
+          <div class="obj-card" data-obj="recomp" onclick="selecionarObj(this)">
+            <div class="obj-icone">⚡</div>
+            <div class="obj-titulo">Recomposição Corporal</div>
+            <div class="obj-desc">Perder gordura e ganhar massa magra simultaneamente.</div>
+          </div>
+          <div class="obj-card" data-obj="hipertrofia" onclick="selecionarObj(this)">
+            <div class="obj-icone">💪</div>
+            <div class="obj-titulo">Hipertrofia Muscular</div>
+            <div class="obj-desc">Foco em ganho de massa magra com superávit calórico controlado.</div>
+          </div>
+          <div class="obj-card" data-obj="emagrecimento" onclick="selecionarObj(this)">
+            <div class="obj-icone">📉</div>
+            <div class="obj-titulo">Emagrecimento Geral</div>
+            <div class="obj-desc">Redução de peso corporal total com preservação de massa magra.</div>
+          </div>
+          <div class="obj-card" data-obj="forca" onclick="selecionarObj(this)">
+            <div class="obj-icone">🏋️</div>
+            <div class="obj-titulo">Força e Performance</div>
+            <div class="obj-desc">Aumento de força máxima e capacidade atlética.</div>
+          </div>
+          <div class="obj-card" data-obj="condicionamento" onclick="selecionarObj(this)">
+            <div class="obj-icone">🏃</div>
+            <div class="obj-titulo">Condicionamento Físico</div>
+            <div class="obj-desc">Melhora cardiovascular, resistência e qualidade de vida.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Período de Acompanhamento</div>
+        <div class="form-grid">
+          <div class="campo">
+            <label>Duração do programa</label>
+            <select id="duracao">
+              <option value="30">30 dias (4 semanas)</option>
+              <option value="60">60 dias (8 semanas)</option>
+              <option value="90" selected>90 dias (13 semanas)</option>
+              <option value="120">120 dias (17 semanas)</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Peso ideal / meta (kg)</label>
+            <input type="number" id="peso_meta" placeholder="Ex: 83" step="0.1"/>
+          </div>
+        </div>
+      </div>
+      <div class="acoes">
+        <button class="btn-sec" onclick="irPara(2)">← Voltar</button>
+        <button class="btn-prim" onclick="calcular()">Gerar Projeção ⚡</button>
+      </div>
+    </div>
+
+    <!-- ETAPA 4: PROJEÇÃO -->
+    <div id="e4" class="oculto">
+      <div id="resultado"></div>
+      <div class="acoes acoes-fim">
+        <button class="btn-sec" onclick="irPara(3)">← Editar</button>
+        <button class="btn-salvar" onclick="salvarAluno()">💾 Salvar Aluno</button>
+        <button class="btn-pdf" onclick="imprimirPDF()">📄 Exportar PDF</button>
+        <button class="btn-verde" onclick="novaAvaliacao()">Nova Avaliação</button>
+      </div>
+    </div>
+
+  </main>
+</div><!-- /app -->
+
+<script src="app.js"></script>
+</body>
+</html>
